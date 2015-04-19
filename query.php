@@ -21,12 +21,16 @@ if ($conn->connect_error) {
 
 //echo $_POST("name");
 $sql = "SELECT sum(kms) FROM run where Name = \"".$_POST['name']."\"and Number = ".$_POST['num'];
+$sql2 = "SELECT * FROM run where Name = \"".$_POST['name']."\"and Number = ".$_POST['num'];
 
 $result= $conn->query($sql);
-$row = $result->fetch_assoc()
-if($row['sum(kms)']!='') {
+$result2= $conn->query($sql2);
+
+$row = $result->fetch_assoc();
+$no_of_runs =  $result2->num_rows;
+if($no_of_runs>0) {
   // Write the value of the column FirstName (which is now in the array $row)
-  echo "Name : ".$_POST['name']."<br>Number : ".$_POST['num']."<br>Total Run : ".$row['sum(kms)'] . "<br />";
+  echo "Name : ".$_POST['name']."<br>Number : ".$_POST['num']."<br>Total Run : ".$row['sum(kms)'] . "<br />Number of runs = ".$no_of_runs."<br>";
 }
 else{
 	echo "Invalid Details"."<br>";
